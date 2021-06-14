@@ -59,7 +59,7 @@ public class EmployeeController {
 	
 	@DeleteMapping("/employees")
 	public ResponseEntity<HttpStatus> deleteEmployee(@RequestParam("id") Long id) {
-		return new  ResponseEntity<HttpStatus>(HttpStatus.NO_CONTENT); //eService.deleteEmployee(id);
+		return new  ResponseEntity<HttpStatus>(HttpStatus.NO_CONTENT);     //eService.deleteEmployee(id);
 	}
 	
 	//FETCH DATA BY NAME
@@ -77,6 +77,34 @@ public class EmployeeController {
 		
 	}
 	
+	//FETCH DATA BY EMAIL
+	@GetMapping("/employees/filterByEmail")
+	public ResponseEntity<List<Employee>> getEmployeesByEmail(@RequestParam String email){
+		return new ResponseEntity<List<Employee>> (eService.getEmployeesByEmail(email),HttpStatus.OK);
+		
+	}
 	
+	//FETCH DATA BY KEYWORD
+		@GetMapping("/employees/filterByKeyword")
+		public ResponseEntity<List<Employee>> getEmployeesByKeyword(@RequestParam String name ){
+			return new ResponseEntity<List<Employee>> (eService.getEmployeesByKeyword(name),HttpStatus.OK);
+			
+		}
+		
+	//JPQL QUERY FOR FETCH DATA FROM DATABASE
+			@GetMapping("/employees/{name}/{location}")
+			public ResponseEntity<List<Employee>> getEmployeesByNameOrLocation(@PathVariable String name,@PathVariable String location ){
+				return new ResponseEntity<List<Employee>> (eService.getEmployeesByNameOrLocation(name,location),HttpStatus.OK);
+					
+		}
+			
+			
+	//JPQL QUERY FOR DELETE DATA FROM DATABASE
+			@DeleteMapping("/employees/delete/{name}")
+			public ResponseEntity<String> deleteEmployeeByName(@PathVariable String name){
+				return new ResponseEntity<String> (eService.deleteEmployeeByName(name)+"No.of Records Deleted",HttpStatus.OK);
+					
+				}
+			
 	
 }

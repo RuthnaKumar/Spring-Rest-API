@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.PageRequest;
 import com.rk.restapi.model.Employee;
 import com.rk.restapi.repository.EmployeeRepository;
@@ -20,7 +22,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	@Override
 	public List<Employee> getEmployees(int pageNumber , int pageSize){
-		Pageable pages = PageRequest.of(pageNumber , pageSize);     //PAGINATION
+		Pageable pages = PageRequest.of(pageNumber , pageSize,Direction.DESC, "id");           //PAGINATION AND SORTIN / DESC for Deserting / ASC for Ascending
 		return eRepository.findAll(pages).getContent();
 	}
 	//SAVE DATA TO DATABASE
@@ -63,6 +65,29 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return eRepository.findByNameAndLocation(name,location);
 	}
 	
-	
-	
+	//FETCH DATA BY EMAIL
+		@Override
+		public List<Employee> getEmployeesByEmail(String email) {
+			return eRepository.findByEmail(email);
+		}
+		
+	//FECT DATA BY KEYWORD
+		@Override
+		public List<Employee> getEmployeesByKeyword(String name){
+			Sort sort =Sort.by(Sort.Direction.DESC, "id");           //DESC for Deserting / ASC for Ascending
+			return eRepository.findByNameContaining(name, sort);
+		}
+		
+		//JPQL QUERE FOR FETCH DATA FROM DATABASE
+		@Override
+		public List<Employee> getEmployeesByNameOrLocation(String name, String location) {
+			return eRepository.getEmployeesByNameOrLocation(name,location);
+		}
+		@Override
+		public Integer deleteEmployeeByName(String name) {
+			return eRepository.deleteEmployeeByName(name);
+		}
+		
+		
+		
 }

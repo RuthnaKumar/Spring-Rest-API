@@ -17,4 +17,13 @@ public interface EmployeeService {
 	List<Employee> getEmployeesByName(String name);
 	//FETCH DATA BY NAME AND LOCATION
 	List<Employee> getEmployeesByNameAndLocation(String name,String location);
+	//FETCH DATA BY EMAIL
+	List<Employee> getEmployeesByEmail(String email);
+	//FETCH DATA BY KEYWORD
+	List<Employee> getEmployeesByKeyword(String name);
+	//JPQL QUERY FOR FETCH DATA FROM DATABASE
+	List<Employee> getEmployeesByNameOrLocation(String name,String location);
+	//JPQL QUERY FOR DELETE DATA FROM DATABASE
+	Integer deleteEmployeeByName(String name);
+	
 }
